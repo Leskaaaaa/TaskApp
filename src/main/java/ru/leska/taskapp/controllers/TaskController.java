@@ -48,14 +48,10 @@ public class TaskController {
 
     @PutMapping("/{id}")
     public ResponseEntity<TaskDTO> updateTask(@PathVariable("id") int id,
-                                        @RequestBody TaskDTO taskDTO) {
-        try {
-            Task task = convertToTask(taskDTO);
-            Task updateTask = taskService.updateTask(id, task);
-            return new ResponseEntity<>(convertToTaskDTO(updateTask), HttpStatus.OK);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+                                              @RequestBody @Valid TaskDTO taskDTO) {
+        Task task = convertToTask(taskDTO);
+        Task updateTask = taskService.updateTask(id, task);
+        return new ResponseEntity<>(convertToTaskDTO(updateTask), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

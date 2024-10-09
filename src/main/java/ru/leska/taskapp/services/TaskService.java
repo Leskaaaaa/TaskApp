@@ -3,6 +3,7 @@ package ru.leska.taskapp.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.leska.taskapp.exception.TaskNotFoundException;
 import ru.leska.taskapp.models.Task;
 import ru.leska.taskapp.repository.TaskRepository;
 
@@ -25,8 +26,8 @@ public class TaskService {
     }
 
     public Task findTaskById(int id) {
-        Optional<Task> task = taskRepository.findById(id);
-        return task.orElse(null);
+        return taskRepository.findById(id)
+                .orElseThrow(() -> new TaskNotFoundException("Task not found with id: " + id));
     }
 
     @Transactional
@@ -40,12 +41,15 @@ public class TaskService {
             updatedTask.setId(id);
             return taskRepository.save(updatedTask);
         } else {
-            throw new RuntimeException("Task not created");
+            throw new TaskNotFoundException("Task not found exception " + id);
         }
     }
 
     @Transactional
     public void deleteTask(int id) {
+        if (taskRepository.existsById(id)) {
+            throw new TaskNotFoundException("Task not found with id: " + id);
+        }
         taskRepository.deleteById(id);
     }
 }
