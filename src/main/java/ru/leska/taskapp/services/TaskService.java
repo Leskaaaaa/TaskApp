@@ -30,22 +30,22 @@ public class TaskService {
     }
 
     @Transactional
-    public void createTask(Task task) {
-        taskRepository.save(task);
+    public Task createTask(Task task) {
+        return taskRepository.save(task);
     }
 
     @Transactional
-    public void updateTask(int id, Task updatedTask) {
-        if (taskRepository.findById(id).isEmpty()) {
+    public Task updateTask(int id, Task updatedTask) {
+        if (taskRepository.existsById(id)) {
             updatedTask.setId(id);
-            taskRepository.save(updatedTask);
+            return taskRepository.save(updatedTask);
         } else {
             throw new RuntimeException("Task not created");
         }
     }
 
     @Transactional
-    public void deleteTask(Task task) {
-        taskRepository.delete(task);
+    public void deleteTask(int id) {
+        taskRepository.deleteById(id);
     }
 }
