@@ -8,7 +8,6 @@ import ru.leska.taskapp.models.Task;
 import ru.leska.taskapp.repository.TaskRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
