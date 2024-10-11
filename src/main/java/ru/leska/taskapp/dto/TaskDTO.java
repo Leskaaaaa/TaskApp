@@ -1,5 +1,6 @@
 package ru.leska.taskapp.dto;
 
+import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
@@ -18,6 +19,7 @@ public class TaskDTO {
     private String description;
 
     @NotNull(message = "Field Date should not been empty")
+    @FutureOrPresent(message = "Date must be in the present or future")
     private LocalDate date;
 
     private boolean completed;

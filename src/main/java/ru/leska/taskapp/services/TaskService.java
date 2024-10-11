@@ -26,7 +26,7 @@ public class TaskService {
 
     public Task findTaskById(int id) {
         return taskRepository.findById(id)
-                .orElseThrow(() -> new TaskNotFoundException("Task not found with id: " + id));
+                .orElseThrow(() -> new TaskNotFoundException(id));
     }
 
     @Transactional
@@ -40,14 +40,14 @@ public class TaskService {
             updatedTask.setId(id);
             return taskRepository.save(updatedTask);
         } else {
-            throw new TaskNotFoundException("Task not found exception " + id);
+            throw new TaskNotFoundException(id);
         }
     }
 
     @Transactional
     public void deleteTask(int id) {
-        if (taskRepository.existsById(id)) {
-            throw new TaskNotFoundException("Task not found with id: " + id);
+        if (!taskRepository.existsById(id)) {
+            throw new TaskNotFoundException(id);
         }
         taskRepository.deleteById(id);
     }

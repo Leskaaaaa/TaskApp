@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class TaskAppApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(TaskAppApplication.class, args);
 	}
