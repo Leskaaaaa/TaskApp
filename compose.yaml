@@ -1,9 +1,17 @@
+version: '3.8'
+
 services:
   postgres:
-    image: 'postgres:latest'
+    image: postgres:latest
+    container_name: my_postgres
     environment:
-      - 'POSTGRES_DB=mydatabase'
-      - 'POSTGRES_PASSWORD=secret'
-      - 'POSTGRES_USER=myuser'
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: leska
+      POSTGRES_DB: task_db
     ports:
-      - '5432'
+      - "5432:5432"
+    volumes:
+      - my_pgdata:/var/lib/postgresql/data
+
+volumes:
+  my_pgdata:
